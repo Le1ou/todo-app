@@ -1,16 +1,16 @@
 import React from "react";
 
-function TasksFilterr() {
+function TasksFilterr( { status, filterTodos } ) {
     return (
         <>
             <li>
-                <button>All</button>
+                <button className={status==="all" ? "selected" : ""} onClick={() => filterTodos("all")}>All</button>
             </li>
             <li>
-                <button>Active</button>
+                <button className={status==="active" ? "selected" : ""} onClick={() => filterTodos("active")}>Active</button>
             </li>
             <li>
-                <button>Completed</button>
+                <button className={status==="completed" ? "selected" : ""} onClick={() => filterTodos("completed")}>Completed</button>
             </li>
         </>
     );

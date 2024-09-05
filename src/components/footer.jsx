@@ -1,14 +1,16 @@
 import React from "react";
 import TasksFilter from "./tasksFilter";
 
-function Footer() {
+function Footer( { todoCount, status, filterTodos, clearData } ) {
     return (
         <footer className="footer">
-            <span className="todo-count">1 items left</span>
+            <span className="todo-count">{todoCount} items left</span>
             <ul className="filters">
-                <TasksFilter />
+                <TasksFilter status={status}
+                             filterTodos={filterTodos}
+                />
             </ul>
-            <button className="clear-completed">Clear Completed</button>
+            <button className="clear-completed" onClick={clearData}>Clear Completed</button>
         </footer>
     );
 }

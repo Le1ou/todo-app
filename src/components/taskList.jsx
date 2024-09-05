@@ -1,7 +1,7 @@
 import React from "react";
 import Task from "./task";
 
-function TaskList( { todos, delTodo } ) {
+function TaskList( { todos, delTodo, onToogleCheck } ) {
 
     const elements = todos.map((item) => {
         const { id, ...itemProps } = item
@@ -9,13 +9,14 @@ function TaskList( { todos, delTodo } ) {
                 <Task
                 key={id}
                 { ...itemProps }
-                delTodo={() => delTodo(id)}/>
+                delTodo={() => delTodo(id)}
+                onToogleCheck={() => onToogleCheck(id)}/>
         );
     })
 
     return (
         <>
-            { elements }
+            {elements}
         </>
     );
 }
