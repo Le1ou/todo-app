@@ -8,7 +8,7 @@ export default class App extends React.Component {
         todoData: [],
         forFilterData: [],
         label: "",
-        status: "all"
+        status: "all",
     }
 
     componentDidMount() {
@@ -18,17 +18,19 @@ export default class App extends React.Component {
     createItem(label) {
         return {
             label: label,
-            date: "idk",
+            date: Date.now(),
             id: Math.random().toString(36).slice(2),
             done: false,
             check: false,
+            edit: false,
+            editText: label
         }
     }
 
     createData = (label) => {
         this.setState(prevState => {
             const newItem = this.createItem(label);
-            const newData = [...prevState.todoData,newItem]
+            const newData = [...prevState.todoData, newItem]
         return {
             todoData: newData,
             forFilterData: newData
@@ -42,9 +44,7 @@ export default class App extends React.Component {
             if (index === -1) {
                 return prevState;
             }
-            const newData = [
-                ...prevState.todoData.slice(0, index),
-                ...prevState.todoData.slice(index+1)
+            const newData = [...prevState.todoData.slice(0, index), ...prevState.todoData.slice(index+1)
             ];
 
             return {
@@ -56,7 +56,7 @@ export default class App extends React.Component {
 
     onToogleCheck = (id) => {
         this.setState(prevState => {
-            const index = prevState.todoData.findIndex(el => el.id===id);
+            const index = prevState.todoData.findIndex(el => el.id === id);
             if (index === -1) {
                 return prevState;
             }
@@ -65,6 +65,64 @@ export default class App extends React.Component {
                             ...item,
                             done: !item.done,
                             check: !item.check}
+            const newData = [...prevState.todoData.slice(0, index), newItem, ...prevState.todoData.slice(index+1)]
+
+            return {
+                todoData: newData,
+                forFilterData: newData
+            }
+        })
+    }
+
+    onSwitchEditing = (id) => {
+        this.setState(prevState => {
+            const index = prevState.todoData.findIndex(el => el.id === id);
+            if (index === -1) {
+                return prevState;
+            }
+            const item = prevState.todoData[index];
+            const newItem = {
+                            ...item,
+                            edit: !item.edit}
+            const newData = [...prevState.todoData.slice(0, index), newItem, ...prevState.todoData.slice(index+1)]
+
+            return {
+                todoData: newData,
+                forFilterData: newData
+            }
+        })
+      };
+    
+    handleEditChange = (id, value) => {
+        this.setState(prevState => {
+            const index = prevState.todoData.findIndex(el => el.id===id);
+            if (index === -1) {
+                return prevState;
+            }
+            const item = prevState.todoData[index];
+            const newItem = {
+                            ...item,
+                            editText: value}
+            const newData = [...prevState.todoData.slice(0, index), newItem, ...prevState.todoData.slice(index+1)]
+
+            return {
+                todoData: newData,
+                forFilterData: newData
+            }
+        })
+      };
+
+    saveEditText = (id) => {
+        this.setState(prevState => {
+            const index = prevState.todoData.findIndex(el => el.id === id);
+            if (index === -1) {
+                return prevState;
+            }
+            const item = prevState.todoData[index];
+            const newItem = {
+                            ...item,
+                            label: item.editText,
+                            edit: false}
             const newData = [...prevState.todoData.slice(0, index), newItem, ...prevState.todoData.slice(index+1)]
 
             return {
@@ -99,13 +157,13 @@ export default class App extends React.Component {
 
     clearData = () => {
         this.setState(prevState => {
-            const clear = prevState.todoData = [];
+            const newData = prevState.forFilterData.filter(el => !el.done)
             return {
-                todoData: clear,
-                forFilterData: clear
+                todoData: newData,
+                forFilterData: newData,
+                status: "all"
             }
         })
-        this.setState({status: "all"})
     } 
 
     render() {
@@ -123,7 +181,10 @@ export default class App extends React.Component {
                     <ul className="todo-list">
                         <TaskList todos={this.state.todoData}
                                   delTodo={this.deleteTodo}
-                                  onToogleCheck={this.onToogleCheck}/>
+                                  onToogleCheck={this.onToogleCheck}
+                                  saveEditText={this.saveEditText}
+                                  handleEditChange={this.handleEditChange}
+                                  onSwitchEditing={this.onSwitchEditing}/>
                     </ul>
                     <Footer status={this.state.status}
                             todoCount={todoCount}

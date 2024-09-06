@@ -1,6 +1,6 @@
 import React from "react";
 
-function TasksFilterr( { status, filterTodos } ) {
+function TasksFilter( { status, filterTodos } ) {
     return (
         <>
             <li>
@@ -16,4 +16,14 @@ function TasksFilterr( { status, filterTodos } ) {
     );
 }
 
-export default TasksFilterr;
+TasksFilter.defaultProps = {
+    status: "all",
+    filterTodos: () => {}
+}
+
+TasksFilter.proptypes = {
+    status: PropTypes.string.isRequired,
+    filterTodos: PropTypes.func
+}
+
+export default TasksFilter;
