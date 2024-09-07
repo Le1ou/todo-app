@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function TasksFilter( { status, filterTodos } ) {
     return (
@@ -21,7 +22,7 @@ TasksFilter.defaultProps = {
     filterTodos: () => {}
 }
 
-TasksFilter.proptypes = {
+TasksFilter.propTypes = {
     status: PropTypes.string.isRequired,
     filterTodos: PropTypes.func
 }

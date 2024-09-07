@@ -14,7 +14,7 @@ NewTaskForm.defaultProps = {
     onLabelChange: () => {}
 }
 
-NewTaskForm.PropTypes = {
+NewTaskForm.propTypes = {
     label: PropTypes.string.isRequired,
     onLabelChange: PropTypes.func
 }

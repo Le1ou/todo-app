@@ -21,7 +21,7 @@ Footer.defaultProps = {
     clearData: () => {}
 }
 
-Footer.PropTypes = {
+Footer.propTypes = {
     todoCount: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
     filterTodos: PropTypes.func,

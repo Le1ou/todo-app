@@ -1,9 +1,9 @@
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
+import PropTypes from "prop-types";
 
 export default class Task extends React.Component {
     static defaulProps = {
-        date: Date.now(),
         done: false,
         check: false,
         edit: false,
@@ -15,9 +15,8 @@ export default class Task extends React.Component {
         saveEditText: () => {}
     }
 
-    static PropTypes = {
+    static propTypes = {
         label: PropTypes.string.isRequired,
-        date: PropTypes.instanceOf(Date),
         done: PropTypes.bool.isRequired,
         check: PropTypes.bool.isRequired,
         edit: PropTypes.bool,

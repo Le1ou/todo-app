@@ -1,5 +1,6 @@
 import React from "react";
 import Task from "./task";
+import PropTypes from "prop-types";
 
 function TaskList( { todos, delTodo, onToogleCheck, handleEditChange, onSwitchEditing, saveEditText } ) {
 
@@ -32,5 +33,23 @@ TaskList.defaultProps = {
     onSwitchEditing: () => {},
     saveEditText: () => {}
 }
+
+TaskList.propTypes = {
+    todos: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            label: PropTypes.string.isRequired,
+            done: PropTypes.bool.isRequired,
+            edit: PropTypes.bool,
+            editText: PropTypes.string,
+            date: PropTypes.number.isRequired,
+        })
+    ),
+    delTodo: PropTypes.func,
+    onToogleCheck: PropTypes.func,
+    handleEditChange: PropTypes.func,
+    onSwitchEditing: PropTypes.func,
+    saveEditText: PropTypes.func,
+};
 
 export default TaskList;
