@@ -1,55 +1,52 @@
 import React from "react";
-import Task from "./task";
 import PropTypes from "prop-types";
 
-function TaskList( { todos, delTodo, onToogleCheck, handleEditChange, onSwitchEditing, saveEditText } ) {
+import Task from "./task";
 
-    const elements = todos.map((item) => {
-        const { id, ...itemProps } = item
-        return (
-                <Task
-                key={id}
-                { ...itemProps }
-                delTodo={() => delTodo(id)}
-                onToogleCheck={() => onToogleCheck(id)}
-                saveEditText={() => saveEditText(id)}
-                handleEditChange={(evt) => handleEditChange(id, evt.target.value)}
-                onSwitchEditing={() => onSwitchEditing(id)}/>
-        );
-    })
-
+function TaskList({ todos, delTodo, onToogleCheck, handleEditChange, onSwitchEditing, saveEditText }) {
+  const elements = todos.map((item) => {
+    const { id, ...itemProps } = item;
     return (
-        <>
-            {elements}
-        </>
+      <Task
+        key={id}
+        {...itemProps}
+        delTodo={() => delTodo(id)}
+        onToogleCheck={() => onToogleCheck(id)}
+        saveEditText={() => saveEditText(id)}
+        handleEditChange={(evt) => handleEditChange(id, evt.target.value)}
+        onSwitchEditing={() => onSwitchEditing(id)}
+      />
     );
+  });
+
+  return <>{elements}</>;
 }
 
 TaskList.defaultProps = {
-    todos: [],
-    delTodo: () => {}, 
-    onToogleCheck: () => {}, 
-    handleEditChange: () => {}, 
-    onSwitchEditing: () => {},
-    saveEditText: () => {}
-}
+  todos: [],
+  delTodo: () => {},
+  onToogleCheck: () => {},
+  handleEditChange: () => {},
+  onSwitchEditing: () => {},
+  saveEditText: () => {},
+};
 
 TaskList.propTypes = {
-    todos: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            label: PropTypes.string.isRequired,
-            done: PropTypes.bool.isRequired,
-            edit: PropTypes.bool,
-            editText: PropTypes.string,
-            date: PropTypes.number.isRequired,
-        })
-    ),
-    delTodo: PropTypes.func,
-    onToogleCheck: PropTypes.func,
-    handleEditChange: PropTypes.func,
-    onSwitchEditing: PropTypes.func,
-    saveEditText: PropTypes.func,
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      done: PropTypes.bool.isRequired,
+      edit: PropTypes.bool,
+      editText: PropTypes.string,
+      date: PropTypes.number.isRequired,
+    })
+  ),
+  delTodo: PropTypes.func,
+  onToogleCheck: PropTypes.func,
+  handleEditChange: PropTypes.func,
+  onSwitchEditing: PropTypes.func,
+  saveEditText: PropTypes.func,
 };
 
 export default TaskList;
